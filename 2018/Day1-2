@@ -35,10 +35,10 @@ int main()
 			f >> el;
 			nr += el;
 			if (v[nr + 300] == 1)
-      {
-				cout << nr<<'\n';
-        return 0;
-      }
+			{
+				cout << nr << '\n';
+				return 0;
+			}
 			v[nr + 300]++;
 		}
 	}
