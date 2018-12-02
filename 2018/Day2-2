@@ -1,0 +1,80 @@
+#include<fstream>
+#include<cstring>
+#include<queue>
+#include<algorithm>
+#include<string.h>
+#include<bitset>
+#include<ctime>
+#include<set>
+#include<cmath>
+#include<unordered_map>
+#include<iomanip>
+#include<map>
+#include<stack>
+#include<vector>
+#include<bitset>
+#include<functional>
+#include<iostream>
+#include<deque>
+#include<unordered_set>
+#include<queue>
+#include<list>
+#include<array>
+#include<ctype.h>
+using namespace std;
+long long i, j, k, ok, nr, n, m, el, min1, max1, x, y, a, b,sum;
+string s;
+int fr[200],frprev[200];
+vector<string>v;
+int main()
+{
+	ifstream f("file.in");
+	//ofstream g("file.out");
+	for (int k = 1; k <= 250; k++)
+	{
+		f >> s;
+		v.push_back(s);
+		
+	}
+	sort(v.begin(), v.end());
+	for (int k=0;k<250-1;k++)
+		for(int l=k+1;l<250;l++)
+		{
+			for (int j = 0; j < v[l].length(); j++)
+				frprev[v[l][j] - 'a']++;
+			for (int j = 0; j < v[k].length(); j++)
+				fr[v[k][j] - 'a']++;
+			for (int i = 0; i <= 26; i++)
+				if (fr[i] == 3)
+				{
+					n++;
+					break;
+				}
+			for (int i = 0; i <= 26; i++)
+				if (fr[i] == 2)
+				{
+					m++;
+					break;
+				}
+			nr = 0;
+			for (int i = 0; i <= 26; i++)
+				nr += abs(fr[i] - frprev[i]);
+			if (nr == 2)
+			{
+				cout << v[k] << ' ' << v[l] << '\n';
+				for (int i = 0; i <= 26; i++)
+					if (fr[i] == frprev[i])
+					{
+						cout << char(i + 'a');
+					}
+				//return 0;
+			}
+			for (int i = 0; i <= 26; i++)
+			{
+				frprev[i] = 0;
+				fr[i] = 0;
+			}
+		}
+	cout << n * m;
+	return 0;
+}
