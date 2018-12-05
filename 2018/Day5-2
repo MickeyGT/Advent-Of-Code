@@ -1,0 +1,73 @@
+#include<fstream>
+#include<cstring>
+#include<queue>
+#include<algorithm>
+#include<string.h>
+#include<bitset>
+#include<ctime>
+#include<set>
+#include<cmath>
+#include<unordered_map>
+#include<iomanip>
+#include<map>
+#include<stack>
+#include<vector>
+#include<bitset>
+#include<functional>
+#include<iostream>
+#include<deque>
+#include<unordered_set>
+#include<queue>
+#include<list>
+#include<array>
+#include<ctype.h>
+using namespace std;
+long long i, j, k, ok, nr, n, m, el, min1, max1, x, y, a, b,sum;
+long long fr[1000001];
+char s[10000000];
+
+void eraseAllSubStr(std::string & mainStr, const std::string & toErase)
+{
+	size_t pos = std::string::npos;
+	while ((pos = mainStr.find(toErase)) != std::string::npos)
+	{
+		mainStr.erase(pos, toErase.length());
+	}
+}
+
+void eraseSubStrings(std::string & mainStr, const std::vector<std::string> & strList )
+{
+	std::for_each(strList.begin(), strList.end(), std::bind(eraseAllSubStr, std::ref(mainStr), std::placeholders::_1));
+}
+
+int main()
+{
+	ifstream f("file.in");
+	//ofstream g("file.out");
+	//getline(f, s);
+	f >> s;
+	min1 = 1111111111;
+	vector<std::string> strLi = { "aA","Aa","bB","Bb","cC","Cc","dD","Dd","eE","Ee","fF","Ff","gG","Gg","hH","Hh",
+		"iI","Ii","jJ","Jj","kK","Kk","lL","Ll","mM","Mm","nN","Nn","oO","Oo","pP","Pp","qQ","Qq","rR",
+		"Rr","sS","Ss","tT","Tt","uU","Uu","vV","Vv","wW","Ww","xX","Xx","yY","Yy","zZ","Zz" };
+	for (char k = 'a'; k < 'z'; k++)
+	{
+		string str = s;
+		str.erase(std::remove(str.begin(), str.end(), k), str.end());
+		str.erase(std::remove(str.begin(), str.end(), k-32), str.end());
+		char *strs;
+		strs = (char *)malloc(str.size() + 1);
+		memcpy(strs, str.c_str(), str.size() + 1);
+		nr = 0;
+		
+		while (str.size() != nr)
+		{
+			nr = str.size();
+			eraseSubStrings(str,strLi);
+			if (str.size() == nr)
+				min1 = min(min1, nr);
+		}
+	}
+	cout << min1;
+	return 0;
+}
