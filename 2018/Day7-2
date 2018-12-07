@@ -1,0 +1,157 @@
+#include<fstream>
+#include<cstring>
+#include<queue>
+#include<algorithm>
+#include<string.h>
+#include<bitset>
+#include<ctime>
+#include<set>
+#include<cmath>
+#include<unordered_map>
+#include<iomanip>
+#include<map>
+#include<stack>
+#include<vector>
+#include<bitset>
+#include<functional>
+#include<iostream>
+#include<deque>
+#include<unordered_set>
+#include<queue>
+#include<list>
+#include<array>
+#include<ctype.h>
+using namespace std;
+long long i, j, k, ok, nr, n, m, el,x, y, a, b,sum,min1;
+string s,str;
+long long fr[1001];
+char c1, c2;
+vector<int>v[100];
+vector<int>rev[100];
+vector<int>que;
+deque<int>deq;
+bool printed[100];
+bool exists[100];
+bool assigned[100];
+long long elfs[5];
+int letters[5];
+
+void assign_work(int nod)
+{
+	if (nod == 50)
+	{
+		printed[nod] = true;
+		for (auto itor : v[nod])
+			que.push_back(itor);
+		return;
+	}
+	if (nod == 500)
+	{
+		min1 = 199999;
+		for (int i = 0; i <= 4; i++)
+			if (letters[i] != -1)
+				min1 = min(min1, elfs[i]);
+		if(min1!= 199999)
+			nr += min1;
+		for (int i = 0; i <= 4; i++)
+			if (elfs[i] == min1)
+			{
+				printed[letters[i]] = true;
+				cout << char(letters[i] + 'A');
+				for (auto itor : v[letters[i]])
+					que.push_back(itor);
+				elfs[i] = 0;
+				letters[i] = -1;
+			}
+		for (int i = 0; i <= 4; i++)
+		{
+			elfs[i] -= min1;
+		}
+		return;
+	}
+	assigned[nod] = true;
+	for (int i = 0; i <= 4; i++)
+		if (letters[i] == -1)
+		{
+			for (auto itor : v[nod])
+				que.push_back(itor);
+			letters[i] = nod;
+			elfs[i] = 61 + nod;
+			return;
+		}
+	min1 = 199999;
+	for (int i = 0; i <= 4; i++)
+		if(letters[i]!=-1)
+			min1 = min(min1, elfs[i]);
+	nr += min1;
+	for (int i = 0; i <= 4; i++)
+		if (elfs[i] == min1)
+		{
+			printed[letters[i]] = true;
+			cout << char(letters[i] + 'A');
+			for (auto itor : v[letters[i]])
+				que.push_back(itor);
+			letters[i] = nod;
+			elfs[i] = 61 + nod;
+		}
+	for (int i = 0; i <= 4; i++)
+	{
+		elfs[i] -= min1;
+	}
+}
+
+void start()
+{
+	que.push_back(50);
+	while (que.size() != 0)
+	{
+		sort(que.begin(), que.end());
+		bool oko = 0;
+		for (auto it = que.begin(); it != que.end(); it++)
+			if(printed[*it]==false&&assigned[*it]==false)
+			{
+				ok = 1;
+				for (auto iter : rev[*it])
+					if(printed[iter]==false)
+					{
+						ok = 0;
+						break;
+					}
+				if (ok)
+				{
+					assign_work(*it);
+					oko = 1;
+					break;
+				}
+			}
+		if(oko==0)
+			assign_work(500);
+	}
+}
+int main()
+{
+	ifstream f("file.in");
+	//ofstream g("file.out");
+	//getline(f, s);
+	while (f >> c1>>c2)
+	{
+		v[c1 - 'A'].push_back(c2-'A');
+		rev[c2 - 'A'].push_back(c1 - 'A');
+		fr[c2 - 'A']++;
+		exists[c2 - 'A'] = true;
+		exists[c1 - 'A'] = true;
+	}
+	for (int i = 0; i <= 25; i++)
+		if (fr[i] == 0)
+		{
+			v[50].push_back(i);		
+		}
+	for (int i = 0; i <= 4; i++)
+	{
+		elfs[i] = 0;
+		letters[i] = -1;
+	}
+	start();
+	cout << '\n';
+	return 0;
+}
