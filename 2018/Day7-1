@@ -1,0 +1,84 @@
+#include<fstream>
+#include<cstring>
+#include<queue>
+#include<algorithm>
+#include<string.h>
+#include<bitset>
+#include<ctime>
+#include<set>
+#include<cmath>
+#include<unordered_map>
+#include<iomanip>
+#include<map>
+#include<stack>
+#include<vector>
+#include<bitset>
+#include<functional>
+#include<iostream>
+#include<deque>
+#include<unordered_set>
+#include<queue>
+#include<list>
+#include<array>
+#include<ctype.h>
+using namespace std;
+long long i, j, k, ok, nr, n, m, el,x, y, a, b,sum;
+string s,str;
+long long fr[1001];
+char c1, c2;
+vector<int>v[100];
+vector<int>rev[100];
+vector<int>que;
+deque<int>deq;
+bool printed[100];
+bool exists[100];
+
+void start()
+{
+	que.push_back(50);
+	while (que.size() != 0)
+	{
+		sort(que.begin(), que.end());
+		for (auto it = que.begin(); it != que.end(); it++)
+			if(printed[*it]==false)
+			{
+				ok = 1;
+				for (auto iter : rev[*it])
+					if(printed[iter]==false)
+					{
+						ok = 0;
+						break;
+					}
+				if (ok)
+				{
+					cout << char(*it + 'A');
+					printed[*it] = true;
+					for (auto itor : v[*it])
+							que.push_back(itor);
+					break;
+				}
+			}
+	}
+}
+int main()
+{
+	ifstream f("file.in");
+	//ofstream g("file.out");
+	//getline(f, s);
+	while (f >> c1>>c2)
+	{
+		v[c1 - 'A'].push_back(c2-'A');
+		rev[c2 - 'A'].push_back(c1 - 'A');
+		fr[c2 - 'A']++;
+		exists[c2 - 'A'] = true;
+		exists[c1 - 'A'] = true;
+	}
+	for (int i = 0; i <= 25; i++)
+		if (fr[i] == 0)
+		{
+			v[50].push_back(i);		
+		}
+	start();
+	cout << '\n';
+	return 0;
+}
