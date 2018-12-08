@@ -1,0 +1,70 @@
+#include<fstream>
+#include<cstring>
+#include<queue>
+#include<algorithm>
+#include<string.h>
+#include<bitset>
+#include<ctime>
+#include<set>
+#include<cmath>
+#include<unordered_map>
+#include<iomanip>
+#include<map>
+#include<stack>
+#include<vector>
+#include<bitset>
+#include<functional>
+#include<iostream>
+#include<deque>
+#include<unordered_set>
+#include<queue>
+#include<list>
+#include<array>
+#include<ctype.h>
+using namespace std;
+long long i, j, k, ok, nr, n, m, el,x, y, a, b,sum,min1,max1;
+string s,str;
+long long fr[1000001];
+char c1, c2;
+vector<int>v[100];
+vector<int>que;
+deque<int>deq;
+ifstream f("file.in");
+void read(int nr,int m)
+{
+	if (nr == 0)
+	{
+		for (int i = 0; i < m; i++)
+		{
+			f >> x;
+			el += x;
+		}
+	}
+	else
+	{
+		for (int i = 0; i < nr; i++)
+		{
+			int nr1, m1;
+			f >> nr1 >> m1;
+			read(nr1, m1);
+		}
+		
+		for (int i = 0; i < m; i++)
+		{
+		f >> x;
+		el += x;
+		}
+	}
+}
+int main()
+{
+
+	//ofstream g("file.out");
+	//getline(f, s);
+	while (f >> nr>>m)
+	{
+		read(nr, m);
+	}
+	cout << '\n';
+	return 0;
+}
