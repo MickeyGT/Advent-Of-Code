@@ -1,0 +1,79 @@
+#include<fstream>
+#include<cstring>
+#include<queue>
+#include<algorithm>
+#include<string.h>
+#include<bitset>
+#include<ctime>
+#include<set>
+#include<cmath>
+#include<unordered_map>
+#include<iomanip>
+#include<map>
+#include<stack>
+#include<vector>
+#include<bitset>
+#include<functional>
+#include<iostream>
+#include<deque>
+#include<unordered_set>
+#include<queue>
+#include<list>
+#include<array>
+#include<ctype.h>
+using namespace std;
+long long i, j, k, ok, nr, n, m, el,x, y, a, b,sum,min1,max1,players,marbles,score,ind,player;
+string s,str;
+long long fr[1000001];
+char c1, c2;
+ifstream f("file.in");
+
+int main()
+{
+
+	//ofstream g("file.out");
+	//getline(f, s);
+	while (f >>players>>marbles)
+	{
+		for (int i = 1; i <= 100000; i++)
+			fr[i]=0;
+		nr = 4;
+		ind = 3;
+		player = 4;
+		score = 0;
+		vector<long long>v{ 0, 2, 1, 3 };
+		for (int i = nr; i <= marbles; i++)
+			if(i%23!=0)
+			{
+				if (ind + 2 == v.size())
+				{
+					v.push_back(i);
+					ind = v.size()-1;
+				}
+				else
+				{
+					ind = (ind + 2) % v.size();
+					v.insert(v.begin() + ind, i);
+				}
+				player++;
+				if (player == players+1)
+					player = 1;
+			}
+			else
+			{
+				el = (ind + v.size() -7) % v.size();
+				fr[player] += i;
+				fr[player] += v[el];
+				v.erase(v.begin() + el);
+				ind = el;
+				player++;
+				if (player == players+1)
+					player = 1;
+			}
+		for (int i = 1; i <= players; i++)
+			score = max(score, fr[i]);
+		cout << score << '\n';
+	}
+	cout << '\n';
+	return 0;
+}
