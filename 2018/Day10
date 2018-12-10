@@ -1,0 +1,22 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib.gridspec as gridspec
+
+fh = open("file.in", "r") 
+
+A = np.array([[0,0,0,0]])
+
+with open("file.in") as fileIn:
+    for line in fileIn:
+        x, y, velx, vely = (int(s) for s in line.split())
+        print(x, y,velx,vely)
+        A = np.vstack([A,[x,y,velx,vely]])
+
+
+j=10086
+for i in range(len(A)):
+    A[i][0]=A[i][0]+A[i][2]*j
+    A[i][1]=A[i][1]+A[i][3]*j
+    
+plt.scatter(A[:,[2]],A[:,[1]],marker='x')
+plt.show()
